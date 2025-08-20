@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Studio Pro | Advanced SEO Optimization Suite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <style>
+        :root {
+            --primary: #0A2463;
+            --secondary: #00B4D8;
+            --accent: #FF6B6B;
+            --lavender: #D8B4E2;
+            --dark: #1E1E24;
+            --light: #F8F9FA;
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --gradient-start: #0A2463;
+            --gradient-end: #3A0CA3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            padding: 20px 0;
+            position: relative;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--secondary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+
+        .logo-icon:hover {
+            transform: rotateY(180deg);
+        }
+
+        .logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            background: linear-gradient(to right, var(--secondary), var(--lavender));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        nav a:hover::after {
+            width: 80%;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--secondary);
+            color: var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 180, 216, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-loading {
+            position: relative;
+            pointer-events: none;
+            color: transparent !important;
+        }
+
+        .btn-loading::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+            margin-left: -10px;
+            margin-top: -10px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            min-height: 80vh;
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+            z-index: 10;
+        }
+
+        .hero h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .three-d-container {
+            flex: 1;
+            height: 500px;
+            position: relative;
+        }
+
+        #seo-visualization {
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .tabs-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .tab-buttons {
+            display: flex;
+            background: rgba(10, 36, 99, 0.5);
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            padding: 18px 30px;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            background: rgba(0, 180, 216, 0.1);
+        }
+
+        .tab-btn.active {
+            background: rgba(0, 180, 216, 0.2);
+            color: var(--secondary);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--secondary);
+        }
+
+        .tab-content {
+            padding: 30px;
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 180, 216, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: var(--secondary);
+            font-size: 24px;
+        }
+
+        .feature-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-desc {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        /* Input Styles */
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .input-control {
+            width: 100%;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--light);
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .input-control:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(0, 180, 216, 0.3);
+        }
+
+        .range-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .range-value {
+            min-width: 40px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-content {
+                max-width: 100%;
+                margin-bottom: 40px;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .three-d-container {
+                width: 100%;
+            }
+
+            nav ul {
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .tab-buttons {
+                flex-wrap: wrap;
+            }
+
+            .tab-btn {
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-container">
+                <div class="logo">
+                    <div class="logo-icon">S</div>
+                    <div class="logo-text">SEO Studio</div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Dashboard</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Analytics</a></li>
+                        <li><a href="#">Pricing</a></li>
+                    </ul>
+                </nav>
+                <div class="user-actions">
+                    <button class="btn btn-secondary">Login</button>
+                    <button class="btn btn-primary">Get Started</button>
+                </div>
+            </div>
+        </header>
+
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Advanced SEO Optimization Suite</h1>
+                <p>Transform your content with our AI-powered SEO Studio. Generate optimized titles, descriptions, schema markup, and more with our cutting-edge tools.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary">Start Free Trial</button>
+                    <button class="btn btn-secondary">View Demo</button>
+                </div>
+            </div>
+            <div class="three-d-container">
+                <canvas id="seo-visualization"></canvas>
+            </div>
+        </section>
+
+        <section class="features">
+            <h2 class="section-title">Powerful SEO Features</h2>
+
+            <div class="tabs-container">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-tab="title-gen">Title & Description</button>
+                    <button class="tab-btn" data-tab="schema-gen">Schema Generator</button>
+                    <button class="tab-btn" data-tab="heading-opt">Heading Optimizer</button>
+                    <button class="tab-btn" data-tab="url-gen">Permalink Generator</button>
+                    <button class="tab-btn" data-tab="content-analyzer">Content Analysis</button>
+                </div>
+
+                <div class="tab-content">
+                    <!-- Title & Description Generator -->
+                    <div class="tab-pane active" id="title-gen">
+                        <div class="input-group">
+                            <label for="seed-keyword">Seed Keyword</label>
+                            <input type="text" id="seed-keyword" class="input-control" placeholder="Enter your primary keyword">
+                        </div>
+
+                        <button class="btn btn-primary">Generate Titles & Descriptions</button>
+
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">✨</div>
+                                <h3 class="feature-title">Optimized Titles</h3>
+                                <p class="feature-desc">AI-generated titles with perfect length and keyword placement for higher click-through rates.</p>
+                            </div>
+
+                            <div class="feature-card">
+                                <div class="feature-icon">📝</div>
+                                <h3 class="feature-title">Compelling Descriptions</h3>
+                                <p class="feature-desc">Engaging meta descriptions that encourage users to click on your search results.</p>
+                            </div>
+
+                            <div class="feature-card">
+                                <div class="feature-icon">📊</div>
+                                <h3 class="feature-title">Performance Analytics</h3>
+                                <p class="feature-desc">Track how your generated titles and descriptions perform in search results.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Schema Generator -->
+                    <div class="tab-pane" id="schema-gen">
+                        <div class="input-group">
+                            <label for="schema-topic">Topic or URL</label>
+                            <input type="text" id="schema-topic" class="input-control" placeholder="Enter topic or paste URL">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="faq-count">Number of FAQs to Generate (0-100)</label>
+                            <div class="range-container">
+                                <input type="range" id="faq-count" class="input-control" min="0" max="100" value="10">
+                                <span class="range-value" id="faq-value">10</span>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary">Generate Schema Markup</button>
+
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">❓</div>
+                                <h3 class="feature-title">FAQ Schema</h3>
+                                <p class="feature-desc">Generate comprehensive FAQ schema to enhance your search visibility.</p>
+                            </div>
+
+                            <div class="feature-card">
+                                <div class="feature-icon">🍪</div>
+                                <h3 class="feature-title">Recipe Schema</h3>
+                                <p class="feature-desc">Perfect schema markup for food bloggers and recipe websites.</p>
+                            </div>
+
+                            <div class="feature-card">
+                                <div class="feature-icon">🎬</div>
+                                <h3 class="feature-title">Video Schema</h3>
+                                <p class="feature-desc">Optimize your video content for better visibility in search results.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional panes would go here -->
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2023 SEO Studio Pro | Advanced SEO Optimization Suite</p>
+        </footer>
+    </div>
+
+    <script>
+        // Three.js 3D Animation
+        function init3DVisualization() {
+            const canvas = document.getElementById('seo-visualization');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, canvas.offsetWidth / canvas.offsetHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+
+            renderer.setSize(canvas.offsetWidth, canvas.offsetHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+
+            // Create particles for SEO visualization
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 500;
+
+            const posArray = new Float32Array(particlesCount * 3);
+            const colorArray = new Float32Array(particlesCount * 3);
+
+            for (let i = 0; i < particlesCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+                colorArray[i] = Math.random();
+            }
+
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
+
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.05,
+                vertexColors: true
+            });
+
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+
+            // Add central SEO sphere
+            const sphereGeometry = new THREE.SphereGeometry(1, 64, 64);
+            const sphereMaterial = new THREE.MeshPhongMaterial({
+                color: 0x00B4D8,
+                shininess: 100,
+                transparent: true,
+                opacity: 0.8
+            });
+
+            const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+            scene.add(sphere);
+
+            // Add lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+
+            const directionalLight = new THREE.DirectionalLight(0x00B4D8, 1);
+            directionalLight.position.set(5, 5, 5);
+            scene.add(directionalLight);
+
+            camera.position.z = 5;
+
+            // Animation
+            function animate() {
+                requestAnimationFrame(animate);
+
+                sphere.rotation.x += 0.005;
+                sphere.rotation.y += 0.005;
+
+                particlesMesh.rotation.x += 0.001;
+                particlesMesh.rotation.y -= 0.001;
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            // Handle resize
+            window.addEventListener('resize', () => {
+                camera.aspect = canvas.offsetWidth / canvas.offsetHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(canvas.offsetWidth, canvas.offsetHeight);
+            });
+        }
+
+        // Tab functionality
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons and panes
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+
+                // Add active class to clicked button
+                button.classList.add('active');
+
+                // Show corresponding pane
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Range input value display
+        const faqRange = document.getElementById('faq-count');
+        const faqValue = document.getElementById('faq-value');
+
+        faqRange.addEventListener('input', () => {
+            faqValue.textContent = faqRange.value;
+        });
+
+        // Initialize 3D visualization when page loads
+        window.addEventListener('load', () => {
+            init3DVisualization();
+
+            // Animate elements on page load
+            gsap.from('.logo', { duration: 1, y: -20, opacity: 0 });
+            gsap.from('nav li', { duration: 1, y: -20, opacity: 0, stagger: 0.1 });
+            gsap.from('.hero-content', { duration: 1, x: -50, opacity: 0 });
+            gsap.from('.three-d-container', { duration: 1, x: 50, opacity: 0 });
+        });
+
+        // Feature Button Interactivity
+        const titleGenBtn = document.querySelector('#title-gen .btn-primary');
+        if (titleGenBtn) {
+            titleGenBtn.addEventListener('click', () => {
+                const featureGrid = document.querySelector('#title-gen .feature-grid');
+                const seedKeyword = document.getElementById('seed-keyword').value || 'your keyword';
+
+                titleGenBtn.classList.add('btn-loading');
+                featureGrid.innerHTML = '<p>Generating amazing titles and descriptions...</p>';
+
+                setTimeout(() => {
+                    titleGenBtn.classList.remove('btn-loading');
+                    featureGrid.innerHTML = `
+                        <div class="feature-card">
+                            <div class="feature-icon">✨</div>
+                            <h3 class="feature-title">Generated Title 1</h3>
+                            <p class="feature-desc">This is the first amazing title about ${seedKeyword}.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">✨</div>
+                            <h3 class="feature-title">Generated Title 2</h3>
+                            <p class="feature-desc">This is another great title for ${seedKeyword}.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">📝</div>
+                            <h3 class="feature-title">Generated Description</h3>
+                            <p class="feature-desc">This is a compelling meta description for an article about ${seedKeyword}, designed to increase click-through rates.</p>
+                        </div>
+                    `;
+                }, 1500);
+            });
+        }
+
+        const schemaGenBtn = document.querySelector('#schema-gen .btn-primary');
+        if (schemaGenBtn) {
+            schemaGenBtn.addEventListener('click', () => {
+                const featureGrid = document.querySelector('#schema-gen .feature-grid');
+                const topic = document.getElementById('schema-topic').value || 'your topic';
+
+                schemaGenBtn.classList.add('btn-loading');
+                featureGrid.innerHTML = '<p>Generating schema markup...</p>';
+
+                setTimeout(() => {
+                    schemaGenBtn.classList.remove('btn-loading');
+                    featureGrid.innerHTML = `
+                        <div class="feature-card">
+                            <div class="feature-icon">❓</div>
+                            <h3 class="feature-title">FAQ Schema Generated</h3>
+                            <p class="feature-desc">
+                                <pre><code>${JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{ "@type": "Question", "name": `What is ${topic}?`, "acceptedAnswer": { "@type": "Answer", "text": "This is the answer." } }] }, null, 2)}</code></pre>
+                            </p>
+                        </div>
+                    `;
+                }, 1500);
+            });
+        }
+    </script>
+</body>
+</html>
