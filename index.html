@@ -584,7 +584,53 @@
                         </div>
                     </div>
 
-                    <!-- Additional panes would go here -->
+                    <!-- Heading Optimizer -->
+                    <div class="tab-pane" id="heading-opt">
+                        <div class="input-group">
+                            <label for="heading-input">Paste Text</label>
+                            <textarea id="heading-input" class="input-control" rows="5" placeholder="Paste your article text here..."></textarea>
+                        </div>
+                        <button class="btn btn-primary">Optimize Headings</button>
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">📈</div>
+                                <h3 class="feature-title">Structure Analysis</h3>
+                                <p class="feature-desc">Visualize your current heading structure and identify areas for improvement.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Permalink Generator -->
+                    <div class="tab-pane" id="url-gen">
+                        <div class="input-group">
+                            <label for="url-keywords">Keywords</label>
+                            <input type="text" id="url-keywords" class="input-control" placeholder="e.g., 'seo best practices 2023'">
+                        </div>
+                        <button class="btn btn-primary">Generate Permalink</button>
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">🔗</div>
+                                <h3 class="feature-title">SEO-Friendly URLs</h3>
+                                <p class="feature-desc">Create clean, readable, and keyword-rich URLs for better search engine ranking.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Analysis -->
+                    <div class="tab-pane" id="content-analyzer">
+                        <div class="input-group">
+                            <label for="content-input">Paste Text</label>
+                            <textarea id="content-input" class="input-control" rows="5" placeholder="Paste your article text here..."></textarea>
+                        </div>
+                        <button class="btn btn-primary">Analyze Content</button>
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">🔬</div>
+                                <h3 class="feature-title">Readability Score</h3>
+                                <p class="feature-desc">Analyze your content's readability using Flesch-Kincaid and other metrics.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -758,6 +804,86 @@
                             <h3 class="feature-title">FAQ Schema Generated</h3>
                             <p class="feature-desc">
                                 <pre><code>${JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{ "@type": "Question", "name": `What is ${topic}?`, "acceptedAnswer": { "@type": "Answer", "text": "This is the answer." } }] }, null, 2)}</code></pre>
+                            </p>
+                        </div>
+                    `;
+                }, 1500);
+            });
+        }
+
+        const headingOptBtn = document.querySelector('#heading-opt .btn-primary');
+        if (headingOptBtn) {
+            headingOptBtn.addEventListener('click', () => {
+                const featureGrid = document.querySelector('#heading-opt .feature-grid');
+
+                headingOptBtn.classList.add('btn-loading');
+                featureGrid.innerHTML = '<p>Optimizing heading structure...</p>';
+
+                setTimeout(() => {
+                    headingOptBtn.classList.remove('btn-loading');
+                    featureGrid.innerHTML = `
+                        <div class="feature-card">
+                            <div class="feature-icon">📈</div>
+                            <h3 class="feature-title">Optimized Structure</h3>
+                            <p class="feature-desc">
+                                <ul>
+                                    <li>H1: Your New Optimized Title</li>
+                                    <li>H2: A Great Subheading</li>
+                                    <li>H2: Another Subheading</li>
+                                    <li>H3: A supporting point</li>
+                                </ul>
+                            </p>
+                        </div>
+                    `;
+                }, 1500);
+            });
+        }
+
+        const urlGenBtn = document.querySelector('#url-gen .btn-primary');
+        if (urlGenBtn) {
+            urlGenBtn.addEventListener('click', () => {
+                const featureGrid = document.querySelector('#url-gen .feature-grid');
+                const keywords = document.getElementById('url-keywords').value || 'your-keywords-here';
+
+                urlGenBtn.classList.add('btn-loading');
+                featureGrid.innerHTML = '<p>Generating SEO-friendly permalink...</p>';
+
+                setTimeout(() => {
+                    urlGenBtn.classList.remove('btn-loading');
+                    const slug = keywords.trim().toLowerCase().replace(/\s+/g, '-');
+                    featureGrid.innerHTML = `
+                        <div class="feature-card">
+                            <div class="feature-icon">🔗</div>
+                            <h3 class="feature-title">Generated Permalink</h3>
+                            <p class="feature-desc">
+                                <code>/${slug}</code>
+                            </p>
+                        </div>
+                    `;
+                }, 1500);
+            });
+        }
+
+        const contentAnalyzerBtn = document.querySelector('#content-analyzer .btn-primary');
+        if (contentAnalyzerBtn) {
+            contentAnalyzerBtn.addEventListener('click', () => {
+                const featureGrid = document.querySelector('#content-analyzer .feature-grid');
+
+                contentAnalyzerBtn.classList.add('btn-loading');
+                featureGrid.innerHTML = '<p>Analyzing content...</p>';
+
+                setTimeout(() => {
+                    contentAnalyzerBtn.classList.remove('btn-loading');
+                    featureGrid.innerHTML = `
+                        <div class="feature-card">
+                            <div class="feature-icon">🔬</div>
+                            <h3 class="feature-title">Analysis Complete</h3>
+                            <p class="feature-desc">
+                                <ul>
+                                    <li>Readability Score: 85/100</li>
+                                    <li>Keyword Density: 2.1%</li>
+                                    <li>Sentiment: Positive</li>
+                                </ul>
                             </p>
                         </div>
                     `;
